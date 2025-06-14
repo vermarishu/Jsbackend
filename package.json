@@ -1,0 +1,16 @@
+{
+  "name": "jsbackend",
+  "version": "1.0.0",
+  "description": "write a code of yt backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "javescript",
+    "backend",
+    "youtube"
+  ],
+  "author": "vermarishu",
+  "license": "ISC"
+}
