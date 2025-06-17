@@ -2,6 +2,7 @@
   "name": "jsbackend",
   "version": "1.0.0",
   "description": "write a code of yt backend",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,5 +13,8 @@
     "youtube"
   ],
   "author": "vermarishu",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
 }
