@@ -54,7 +54,7 @@ import bcrypt from "bcrypt"
     // if(this.inModified("passwrod")) {} - 1st method
     // 2nd method 
     if(!this.isModified("passwrod")) return next()
-    this.passwrod = bcrypt.hash(this.passwrod, 10
+    this.passwrod = await bcrypt.hash(this.passwrod, 10
     )
     next()
  })

@@ -13,3 +13,13 @@ const storage = multer.diskStorage({
 export const upload = multer({
     storage,
 })  
+
+// ? - why here we not use export default 
+// because - Then you configure multer with some custom storage settings,
+// Because that would export the entire multer library again, 
+// If you wanted to use export default, you could do:
+
+// const upload = multer({ storage });
+// export default upload;
+
+// import upload from './middlewares/multer.js';
