@@ -12,16 +12,16 @@ import bcrypt from "bcrypt"
             trim: true,
             index: true
         },
-         emial: {
+         email: {
             type: String,
-            require: true,
+            required: true,
             unique: true,
             lowecase: true,
             trim: true,
         },
          fullName: {
             type: String,
-            require: true,
+            required: true,
             trim: true,
             index: true
         },
@@ -38,9 +38,9 @@ import bcrypt from "bcrypt"
                 ref: "Video"
             }
         ], 
-        passwrod: {
+        password: {
             type: String,
-            requrired: [true, "passwrod is required"]
+            required: [true, "passwrod is required"]
         },
         refreshToken: {
             type: String
@@ -53,15 +53,15 @@ import bcrypt from "bcrypt"
  userSchema.pre("save", async function(next) {
     // if(this.inModified("passwrod")) {} - 1st method
     // 2nd method 
-    if(!this.isModified("passwrod")) return next()
-    this.passwrod = await bcrypt.hash(this.passwrod, 10
+    if(!this.isModified("password")) return next()
+    this.password = await bcrypt.hash(this.password, 10
     )
     next()
  })
  userSchema.methods.isPasswrodCorrect = async function(password) {
     return await bcrypt.compare(password, this.password)
  }
- userSchema.method.generateAccessToken = function() {
+ userSchema.methods.generateAccessToken = function() {
     return jwt.sign(
         {
             _id: this._id,
@@ -77,7 +77,7 @@ import bcrypt from "bcrypt"
         }
     )
  }
- userSchema.method.generateRefreshToken = function() {
+ userSchema.methods.generateRefreshToken = function() {
     return jwt.sign(
         {
             _id: this._id

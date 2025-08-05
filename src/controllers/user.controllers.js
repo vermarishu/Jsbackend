@@ -60,10 +60,18 @@ const registerUser = asyncHandler( async (req, res) => {
     if(exitedUser) {
         throw new ApiError(400, "alredy exists")
     }
+    console.log("req.files:", req.files);
+
     
     // step 5  , checking for image and avatar
     const avatarLocalPath = req.files?.avatar[0]?.path;
-    const coverImageLocalPath = req.files?.coverImage[0]?.path;
+    // const coverImageLocalPath = req.files?.coverImage[0]?.path;
+
+    let coverImageLocalPath;
+    if (req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.length > 0) {
+      coverImageLocalPath = req.files.coverImage[0].path
+    }
+
     
     if (!avatarLocalPath) { 
         throw new ApiError(409, "Required")
@@ -84,7 +92,7 @@ const registerUser = asyncHandler( async (req, res) => {
         coverImage: coverImage?.url || "",
         email,
         password,
-        username: username.tolowerCase()
+        username: username.toLowerCase()
     })
     
     // setp 8 , check for user createion & remove passwrod and refresh token 
