@@ -8,13 +8,13 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 const generateAccessAndRefressToken = async(UserId) => {
   try {
     const user = await User.findById(UserId)
-    const accessToken = User.generateAccessToken()
-    const refreshToken = User.generateRefreshToken() 
+    const accessToken = user.generateAccessToken()
+    const refreshToken = user.generateRefreshToken() 
 
     user.refreshToken = refreshToken
     await user.save({ validateBeforeSave: false })
 
-    return { accessToken, refreshToken}
+    return { accessToken, refreshToken }
 
   } catch (error) {
     throw new ApiError(500, "something went wrong while generating access and refress token")
@@ -144,7 +144,7 @@ const loginUser = asyncHandler(async(req, res) => {
   }
 
 // setp 3 - find the user => db
-const user = await user.findOne({
+const user = await User.findOne({
   $or: [{ username } , { email }]
 })
 if (!user) {
@@ -152,14 +152,14 @@ if (!user) {
 }
 
 // setp 4 - check password 
-const isPasswordValid = await isPasswrodCorrect(password)
+const isPasswordValid = await user.isPasswordCorrect(password)
 if (!isPasswordValid) {
   throw new ApiError(401, "Invalid Password")
 }
 
 //setp 5 - access and refresh token 
 // we have created generateAccessAndRefreshToken method seprately , line -8 
-const {accessToken, refreshToken} = generateAccessAndRefressToken(user._id)
+const {accessToken, refreshToken} = await generateAccessAndRefressToken(user._id)
 const logedInUser = await User.findById(user._id).select("-password -refreshToken")  
 
 const options = {
@@ -200,8 +200,8 @@ const logoutUser = asyncHandler(async(req, res) => {
 
   return res
   .status(200)
-  .clearCookies("accessToken", options)
-  .clearCookies("refreshToken", options)
+  .clearCookie("accessToken", options)
+  .clearCookie("refreshToken", options)
   .json(new ApiResponse(200, {}, "logout successfully"))
 }) 
 

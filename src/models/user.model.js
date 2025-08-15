@@ -58,7 +58,7 @@ import bcrypt from "bcrypt"
     )
     next()
  })
- userSchema.methods.isPasswrodCorrect = async function(password) {
+ userSchema.methods.isPasswordCorrect = async function(password) {
     return await bcrypt.compare(password, this.password)
  }
  userSchema.methods.generateAccessToken = function() {
@@ -83,6 +83,7 @@ import bcrypt from "bcrypt"
             _id: this._id
         },
         process.env.REFRESH_TOKEN_SECRET,
+        
         {
             expiresIn: process.env.REFRESH_TOKEN_EXPIRY
         }
