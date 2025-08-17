@@ -6,14 +6,14 @@ import { User } from "../models/user.model.js";
 export const verifyJWT = asyncHandler(async(req, res, next) => {
     try {
         const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "").trim()
-        console.log("token recived:", token);
+        // console.log("token recived:", token);
     
         if(!token) {
             throw new ApiError(401, "Unauthorized request")
         }
     
         const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
-        console.log("decodedToken:", decodedToken);
+        // console.log("decodedToken:", decodedToken);
         
         const user = await User.findById(decodedToken?._id).select("-password -refreshToken")
     
@@ -25,7 +25,7 @@ export const verifyJWT = asyncHandler(async(req, res, next) => {
         next()
         
     } catch (error) {
-        console.log("jwt error:", error.message);
+        // console.log("jwt error:", error.message);
         throw new ApiError(401, error?.message || "Invalid Token Access")
     }
 })
