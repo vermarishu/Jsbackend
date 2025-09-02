@@ -26,8 +26,16 @@ import bcrypt from "bcrypt"
             index: true
         },
         avatar: {
-            type: String, // cloudinary url
-            required: true, 
+          //  type: String, // cloudinary url
+          //  required: true,
+          url: {
+            type: String,
+            required: true,   // Cloudinary secure_url
+            },
+          public_id: {
+            type: String,
+            required: true,   // Cloudinary public_id
+            } 
         }, 
         coverImage: {
             type:String, // cloudinary url

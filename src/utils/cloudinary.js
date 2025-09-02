@@ -32,7 +32,24 @@ const uploadOnCloudinary = async (localFilePath) => {
     }
 } 
 
-export{uploadOnCloudinary}
+// // delete image file after updateImagefile successfully 
+// const deleteFromCloudinary = async(publicId) => {
+//    try {
+//       // Delete the file from cloudinary using public_id
+//         const result = await cloudinary.uploader.destroy(publicId, {
+//             resource_type: "auto" // or "auto" for any type of file
+//         });
+//      return result;
+//    } catch (error) {
+//     throw new ApiError(401, error?.message || "Error deleting Image from clodinary")
+//    }
+
+// }
+
+export{
+    uploadOnCloudinary,
+    // deleteFromCloudinary
+}
 
     
 //     // Upload an image
