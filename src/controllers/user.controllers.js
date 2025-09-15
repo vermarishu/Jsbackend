@@ -38,7 +38,8 @@ const registerUser = asyncHandler( async (req, res) => {
     
     // step - 1 , get user details from fronted 
     const {fullName, email, password, username} = req.body
-    console.log("email", email)
+    console.log("email", email);
+    console.log("fullName", fullName);
     
     // step 3, valikdation 
     
@@ -290,14 +291,19 @@ const getCurrentUser =  asyncHandler(async(req, res) => {
 
 // allow user to change their detail 
 const updateAccountDetails = asyncHandler(async(req, res) => {
-  const {fullName, email} = req.body
+  const { fullName, email, ...extraFields } = req.body
+
+  //  #If any extra fields provided, throw erro
+  if (Object.keys(extraFields).length > 0) {
+    throw new ApiError(400, "Only fullName and email can be updated");
+  }
 
   if(!(fullName || email)) {
     throw new ApiError(400, "field are required")
   }
 
   const user = await User.findByIdAndUpdate(
-    req.body?._id,
+    req.user?._id,
     {
       $set : {
         fullName: fullName, // fullName - we can also write this only
