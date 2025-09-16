@@ -28,7 +28,7 @@ import bcrypt from "bcrypt"
         avatar: {
           //  type: String, // cloudinary url
           //  required: true,
-          url: {
+          secure_url: {
             type: String,
             required: true,   // Cloudinary secure_url
             },
